@@ -1,36 +1,18 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useState } from 'react'
 import Header from './Header'
 
 const Viewdonor = () => {
-    var Viewdonor=[
-        {
-            "name":"sruthy",
-            "address":"sruthy villa",
-            "bloodGroup":"A+",
-            "mobileNo":9207096060,
-            "userName":"sruthy45",
-            "password":"shadow"
+    var [Viewdonor,setViewdonor]=useState([])
+    var [loadstatus,setLoadstatus]=useState(true)
+    axios.get("http://localhost:5007/api/bloodview").then(
+      (response)=>{
+        console.log(response.data)
+        setViewdonor(response.data)
+        setLoadstatus(false)
 
-         },
-         {
-          "name":"Adhi",
-          "address":"Adhithya vilasam",
-          "bloodGroup":"B+",
-          "mobileNo":9287796660,
-          "userName":"adhi11",
-          "password":12345678
-
-       },
-       {
-        "name":"Anju",
-        "address":"anju bhavanam",
-        "bloodGroup":"A+",
-        "mobileNo":9876543211,
-        "userName":"anju66",
-        "password":"anju1234"
-
-     }
-]
+      }
+    )
   return (
     <div>
         <Header/>
@@ -39,8 +21,10 @@ const Viewdonor = () => {
                 <div className='col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12'>
                     <div className='row g-3'>
                         <div className='col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12'>
-                         <table class="table table-primary table-striped">
-  <thead>
+                         {loadstatus ? <div className="spinner-border" role="status">
+  <span className="visually-hidden">Loading...</span>
+</div> : <table className="table table-primary table-striped">
+  <thead className='table-success'>
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Address</th>
@@ -62,7 +46,7 @@ const Viewdonor = () => {
     </tr>
     })}   
   </tbody>
-</table>
+</table>}
 
                         </div>
 
