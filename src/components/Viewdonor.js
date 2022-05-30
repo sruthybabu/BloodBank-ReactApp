@@ -3,6 +3,23 @@ import React, { useState } from 'react'
 import Header from './Header'
 
 const Viewdonor = () => {
+  const deleteBlood=(id)=>{
+    const data={"_id":id}
+    console.log(data)
+    axios.post("http://localhost:5007/api/delete",data).then(
+      (response)=>{
+        if(response.data.status=="success")
+                {
+                    alert("Successfully deleted")
+                }
+                else
+                {
+                    alert("Failed to delete")
+                }
+      })
+  }
+
+
     var [Viewdonor,setViewdonor]=useState([])
     var [loadstatus,setLoadstatus]=useState(true)
     axios.get("http://localhost:5007/api/bloodview").then(
@@ -32,6 +49,7 @@ const Viewdonor = () => {
       <th scope="col">Mobile Number</th>
       <th scope="col">Username</th>
       <th scope="col">Password</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -43,6 +61,7 @@ const Viewdonor = () => {
       <td>{value.mobileNo}</td>
       <td>{value.userName}</td>
       <td>{value.password}</td>
+      <td><button onClick={()=>{deleteBlood(value._id)}} className='btn btn-danger'>DELETE</button></td>
     </tr>
     })}   
   </tbody>
